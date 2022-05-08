@@ -41,10 +41,7 @@ app.get('/', function(req, res) {
     } else {
       console.log(err);
     }  
-  });
-
-
-  
+  });  
   
 });
 
@@ -79,34 +76,29 @@ app.post('/compose', function(req, res) {
     body: req.body.textareaInput
   });
 
-  newPost.save();
-
-  res.redirect('/');
+  newPost.save(function(err) {
+    if(!err) {
+      res.redirect('/');
+    } else {
+      console.log(err);
+    }    
+  });  
 
 });
 
 //Routing Parameters
-app.get('/posts/:postName', function(req, res) {
+app.get('/posts/:postId', function(req, res) {
 
-  const requestedTitle = _.lowerCase(req.params.postName);
+  const requestedId = req.params.postId;
 
-  posts.forEach(function(post) {
-
-    const storedTitle = _.lowerCase(post.postTitle);
-    const storedContent = post.postContent;
-
-    if(storedTitle === requestedTitle) {
-      res.render('post', {
-        individualPostTitle: requestedTitle,
-        individualPostContent: storedContent
-      });
-    }
-
+  Post.findOne({_id: requestedId}, function(err, post) {    
+    res.render('post', {
+      individualPostTitle: post.title,
+      individualPostContent: post.body
+    });      
   });
-  
+
 });
-
-
 
 //Opening server
 app.listen(3000, function() {
