@@ -3,11 +3,11 @@
 <h1>Home</h1>
 <p><%= homeStartingText %></p>
 
-<% postsArray.forEach(function(post) { %>
+<% posts.forEach(function(post) { %>
     <div>
-        <h1> <%= post.postTitle %> </h1>
+        <h1> <%= post.title %> </h1>
         <p>
-            <%= post.postContent.substring(0, 100) + ' ...' %>
+            <%= post.body.substring(0, 100) + ' ...' %>
             <a href="/posts/<%= post.postTitle %>">Read More</a> 
         </p>
                

@@ -68,21 +68,15 @@ app.get('/contact', function(req, res) {
 
 //Compose page rout
 app.get('/compose', function(req, res) {
-
   res.render('compose', {    
   });
-
 });
 
 app.post('/compose', function(req, res) {
 
-  
-  const postTitle = req.body.composeInput;
-  const postContent = req.body.textareaInput;  
-
   const newPost = new Post({
-    title: postTitle,
-    body: postContent
+    title: req.body.composeInput,
+    body: req.body.textareaInput
   });
 
   newPost.save();
